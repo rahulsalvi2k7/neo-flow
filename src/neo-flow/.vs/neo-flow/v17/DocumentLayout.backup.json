@@ -1,0 +1,53 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Study\\git\\rahulsalvi2k7\\neo-flow\\src\\neo-flow\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{40651D64-5813-42CC-A1E5-604A3D570AE7}|..\\..\\tests\\neo.flow.core.tests\\neo.flow.core.tests.csproj|d:\\study\\git\\rahulsalvi2k7\\neo-flow\\tests\\neo.flow.core.tests\\steps\\conditionalsteptests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C614ECD5-4BE9-65AD-AF46-87C235B0FE5B}|neo.flow.core\\neo.flow.core.csproj|d:\\study\\git\\rahulsalvi2k7\\neo-flow\\src\\neo-flow\\neo.flow.core\\steps\\conditionalstep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C614ECD5-4BE9-65AD-AF46-87C235B0FE5B}|neo.flow.core\\neo.flow.core.csproj|solutionrelative:neo.flow.core\\steps\\conditionalstep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ConditionalStepTests.cs",
+              "DocumentMoniker": "D:\\Study\\git\\rahulsalvi2k7\\neo-flow\\tests\\neo.flow.core.tests\\Steps\\ConditionalStepTests.cs",
+              "RelativeDocumentMoniker": "..\\..\\tests\\neo.flow.core.tests\\Steps\\ConditionalStepTests.cs",
+              "ToolTip": "D:\\Study\\git\\rahulsalvi2k7\\neo-flow\\tests\\neo.flow.core.tests\\Steps\\ConditionalStepTests.cs",
+              "RelativeToolTip": "..\\..\\tests\\neo.flow.core.tests\\Steps\\ConditionalStepTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-06T11:27:21.421Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ConditionalStep.cs",
+              "DocumentMoniker": "D:\\Study\\git\\rahulsalvi2k7\\neo-flow\\src\\neo-flow\\neo.flow.core\\Steps\\ConditionalStep.cs",
+              "RelativeDocumentMoniker": "neo.flow.core\\Steps\\ConditionalStep.cs",
+              "ToolTip": "D:\\Study\\git\\rahulsalvi2k7\\neo-flow\\src\\neo-flow\\neo.flow.core\\Steps\\ConditionalStep.cs",
+              "RelativeToolTip": "neo.flow.core\\Steps\\ConditionalStep.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-06T11:27:12.026Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
