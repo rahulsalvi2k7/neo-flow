@@ -5,7 +5,7 @@ namespace neo.flow.core.Builder
 {
     public sealed class BuiltWorkflow : WorkflowBase
     {
-        private readonly IReadOnlyList<IBusinessStep> _steps;
+        public readonly IReadOnlyList<IBusinessStep> _steps;
 
         public BuiltWorkflow(string name, IReadOnlyList<IBusinessStep> steps)
         {
@@ -15,6 +15,6 @@ namespace neo.flow.core.Builder
 
         public override string Name { get; }
 
-        protected override IReadOnlyList<IBusinessStep> Steps => _steps;
+        public override IReadOnlyList<IBusinessStep> Steps => _steps;
     }
 }

@@ -4,7 +4,7 @@ namespace neo.flow.core.Base
 {
     public abstract class WorkflowBase : IWorkflow
     {
-        protected abstract IReadOnlyList<IBusinessStep> Steps { get; }
+        public abstract IReadOnlyList<IBusinessStep> Steps { get; }
 
         public virtual string Name => GetType().Name;
 
