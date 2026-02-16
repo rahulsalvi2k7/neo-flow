@@ -9,6 +9,7 @@ namespace neo.flow.core.tests.Steps
     public class ParallelStepTests
     {
         private Mock<IExecutionContext> mockExecutionContext = null!;
+        private Mock<ILogger> mockLogger = new Mock<ILogger>();
 
         [SetUp]
         public void Setup()
@@ -23,7 +24,7 @@ namespace neo.flow.core.tests.Steps
             var mockStep1 = new Mock<IBusinessStep>();
             var mockStep2 = new Mock<IBusinessStep>();
             var mockStep3 = new Mock<IBusinessStep>();
-            var parallelStep = new ParallelStep("TestParallel", mockStep1.Object, mockStep2.Object, mockStep3.Object);
+            var parallelStep = new ParallelStep("TestParallel", mockLogger.Object, mockStep1.Object, mockStep2.Object, mockStep3.Object);
 
             // Act
             await parallelStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None);
@@ -39,7 +40,7 @@ namespace neo.flow.core.tests.Steps
         {
             // Arrange
             var mockStep = new Mock<IBusinessStep>();
-            var parallelStep = new ParallelStep("SingleParallel", mockStep.Object);
+            var parallelStep = new ParallelStep("SingleParallel", mockLogger.Object, mockStep.Object);
 
             // Act
             await parallelStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None);
@@ -88,7 +89,7 @@ namespace neo.flow.core.tests.Steps
         {
             // Arrange
             var mockStep = new Mock<IBusinessStep>();
-            var parallelStep = new ParallelStep("CancellableParallel", mockStep.Object);
+            var parallelStep = new ParallelStep("CancellableParallel", mockLogger.Object, mockStep.Object);
             var cancellationToken = new CancellationToken();
 
             // Act
@@ -108,7 +109,7 @@ namespace neo.flow.core.tests.Steps
             mockStep1.Setup(m => m.ExecuteAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()))
                 .ThrowsAsync(testException);
 
-            var parallelStep = new ParallelStep("FailingParallel", mockStep1.Object, mockStep2.Object);
+            var parallelStep = new ParallelStep("FailingParallel", mockLogger.Object, mockStep1.Object, mockStep2.Object);
 
             // Act & Assert
             Assert.ThrowsAsync<InvalidOperationException>(async () =>

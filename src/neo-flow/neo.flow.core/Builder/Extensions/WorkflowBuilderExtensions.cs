@@ -37,7 +37,7 @@ namespace neo.flow.core.Builder.Extensions
         {
             var pb = new ParallelBuilder();
             configure(pb);
-            builder.Step(pb.Build(name));
+            builder.Step(pb.Build());
             return builder;
         }
 

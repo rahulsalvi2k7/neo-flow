@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neo.flow.core", "neo.flow.c
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neo.flow.core.tests", "..\..\tests\neo.flow.core.tests\neo.flow.core.tests.csproj", "{40651D64-5813-42CC-A1E5-604A3D570AE7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neo.flow.app", "neo.flow.app\neo.flow.app.csproj", "{05AEEF7C-F10B-43E7-9154-6943845AB561}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{40651D64-5813-42CC-A1E5-604A3D570AE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40651D64-5813-42CC-A1E5-604A3D570AE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40651D64-5813-42CC-A1E5-604A3D570AE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05AEEF7C-F10B-43E7-9154-6943845AB561}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05AEEF7C-F10B-43E7-9154-6943845AB561}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05AEEF7C-F10B-43E7-9154-6943845AB561}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05AEEF7C-F10B-43E7-9154-6943845AB561}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,6 +6,19 @@ namespace neo.flow.core.Builder
     public sealed class ParallelBuilder
     {
         private readonly List<IBusinessStep> _branches = new();
+        private string _name;
+        private ILogger? _logger;
+
+        public ParallelBuilder(string name)
+        {
+            _name = name;
+        }
+
+        public ParallelBuilder Logger(ILogger? logger)
+        {
+            _logger = logger;
+            return this;
+        }
 
         public ParallelBuilder Branch(Action<WorkflowBuilder> build)
         {
@@ -15,9 +28,9 @@ namespace neo.flow.core.Builder
             return this;
         }
 
-        public IBusinessStep Build(string name)
+        public IBusinessStep Build()
         {
-            return new ParallelStep(name, _branches.ToArray());
+            return new ParallelStep(_name, _logger, _branches.ToArray());
         }
     }
 }
