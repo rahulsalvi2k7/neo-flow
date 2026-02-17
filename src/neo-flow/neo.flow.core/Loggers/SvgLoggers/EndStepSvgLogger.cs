@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using neo.flow.core.Engine;
 using neo.flow.core.Steps;
 
-namespace neo.flow.core.Loggers
+namespace neo.flow.core.Loggers.SvgLoggers
 {
     public class EndStepSvgLogger : SvgLogger
     {

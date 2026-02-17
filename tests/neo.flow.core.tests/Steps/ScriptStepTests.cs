@@ -21,7 +21,7 @@ namespace neo.flow.core.Tests.Steps
             .Returns(System.DateTime.UtcNow);
 
             var context = new Engine.ExecutionContext(dateTimeProvider.Object);
-            await context.Set("foo", 42);
+            await context.Set("foo", 42d);
             var script = @"set('bar', get('foo') + 1);";
             var step = new ScriptStep(string.Empty, script);
 
@@ -29,7 +29,7 @@ namespace neo.flow.core.Tests.Steps
             await step.ExecuteAsync(context, CancellationToken.None);
 
             // Assert
-            var result = context.Get<int>("bar");
+            var result = context.Get<double>("bar");
             Assert.That(result, Is.EqualTo(43));
         }
     }

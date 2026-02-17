@@ -7,24 +7,23 @@ namespace neo.flow.core.Builder
     {
         private readonly List<IBusinessStep> _branches = new();
         private string _name;
-        private ILogger? _logger;
+        private ILogger<ParallelStep>? _logger;
 
         public ParallelBuilder(string name)
         {
             _name = name;
         }
 
-        public ParallelBuilder Logger(ILogger? logger)
+        public ParallelBuilder Logger(ILogger<ParallelStep>? logger)
         {
             _logger = logger;
             return this;
         }
 
-        public ParallelBuilder Branch(Action<WorkflowBuilder> build)
+        public ParallelBuilder Branch(IBusinessStep branch)
         {
-            var wb = new WorkflowBuilder("ParallelBranch");
-            build(wb);
-            _branches.Add(wb.Build());
+            _branches.Add(branch);
+
             return this;
         }
 

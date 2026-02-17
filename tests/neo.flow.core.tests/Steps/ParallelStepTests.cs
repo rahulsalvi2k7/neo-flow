@@ -9,7 +9,7 @@ namespace neo.flow.core.tests.Steps
     public class ParallelStepTests
     {
         private Mock<IExecutionContext> mockExecutionContext = null!;
-        private Mock<ILogger> mockLogger = new Mock<ILogger>();
+        private Mock<ILogger<ParallelStep>> mockLogger = new Mock<ILogger<ParallelStep>>();
 
         [SetUp]
         public void Setup()

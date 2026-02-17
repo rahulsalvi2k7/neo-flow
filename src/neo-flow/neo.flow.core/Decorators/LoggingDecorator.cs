@@ -7,12 +7,12 @@ namespace neo.flow.core.Decorators
     /// </summary>
     public static class LoggingDecorator
     {
-        public static async Task InvokeWithLoggingAsync(
+        public static async Task InvokeWithLoggingAsync<T>(
             Func<IExecutionContext, CancellationToken, Task> method,
             IExecutionContext context,
             CancellationToken ct,
-            string stepName,
-            ILogger? logger)
+            T t,
+            ILogger<T>? logger)
         {
             var start = DateTime.UtcNow;
             try
@@ -21,13 +21,11 @@ namespace neo.flow.core.Decorators
             }
             finally
             {
-                var end = DateTime.UtcNow;
-
                 if (context is Engine.ExecutionContext execContext)
                 {
                     if (logger is not null)
                     {
-                        await logger.LogExecutionAsync(stepName, start, end, execContext);
+                        await logger.LogExecutionAsync(t, execContext);
                     }
                 }
             }

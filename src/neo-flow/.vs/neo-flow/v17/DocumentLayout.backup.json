@@ -1,12 +1,36 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Study\\git\\rahulsalvi2k7\\neo-flow\\src\\neo-flow\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{40651D64-5813-42CC-A1E5-604A3D570AE7}|..\\..\\tests\\neo.flow.core.tests\\neo.flow.core.tests.csproj|d:\\study\\git\\rahulsalvi2k7\\neo-flow\\tests\\neo.flow.core.tests\\steps\\scriptsteptests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ScriptStepTests.cs",
+              "DocumentMoniker": "D:\\Study\\git\\rahulsalvi2k7\\neo-flow\\tests\\neo.flow.core.tests\\Steps\\ScriptStepTests.cs",
+              "RelativeDocumentMoniker": "..\\..\\tests\\neo.flow.core.tests\\Steps\\ScriptStepTests.cs",
+              "ToolTip": "D:\\Study\\git\\rahulsalvi2k7\\neo-flow\\tests\\neo.flow.core.tests\\Steps\\ScriptStepTests.cs",
+              "RelativeToolTip": "..\\..\\tests\\neo.flow.core.tests\\Steps\\ScriptStepTests.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAnwBgAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-17T07:00:30.935Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

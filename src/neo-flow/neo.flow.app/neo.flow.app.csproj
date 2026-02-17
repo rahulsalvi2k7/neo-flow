@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\neo.flow.core\neo.flow.core.csproj" />
+    <ProjectReference Include="..\neo.flow.logger.console\neo.flow.logger.console.csproj" />
   </ItemGroup>
 
 </Project>

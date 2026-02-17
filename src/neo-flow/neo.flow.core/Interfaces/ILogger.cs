@@ -7,4 +7,13 @@ namespace neo.flow.core.Interfaces
     {
         Task LogExecutionAsync(string stepName, DateTime startTime, DateTime endTime, Engine.ExecutionContext context);
     }
+
+    /// <summary>
+    ///  
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public interface ILogger<T>
+    {
+        Task LogExecutionAsync(T t, Engine.ExecutionContext context);
+    }
 }

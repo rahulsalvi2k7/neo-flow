@@ -1,4 +1,4 @@
-namespace neo.flow.core.Loggers
+namespace neo.flow.core.Loggers.SvgLoggers
 {
     public class StartStepSvgLogger : SvgLogger
     {
@@ -21,8 +21,8 @@ namespace neo.flow.core.Loggers
 
             x += 100;
 
-            await context.Set<int>("x", x);
-            await context.Set<int>("y", y);
+            await context.Set("x", x);
+            await context.Set("y", y);
         }
     }
 }

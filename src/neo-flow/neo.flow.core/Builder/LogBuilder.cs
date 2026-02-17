@@ -6,29 +6,22 @@ namespace neo.flow.core.Builder
     public sealed class LogBuilder
     {
         private string? _name;
-        private ILogger? _logger;
-        private IBusinessStep? _next;
+        private ILogger<LogStep>? _logger;
 
         public LogBuilder(string name)
         {
             _name = name;
         }
 
-        public LogBuilder Logger(ILogger? logger)
+        public LogBuilder Logger(ILogger<LogStep>? logger)
         {
             _logger = logger;
             return this;
         }
 
-        public LogBuilder Next(IBusinessStep? next)
-        {
-            _next = next;
-            return this;
-        }
-
         public IBusinessStep Build()
         {
-            return new LogStep(_name, _next, _logger);
+            return new LogStep(_name, _logger);
         }
     }
 }

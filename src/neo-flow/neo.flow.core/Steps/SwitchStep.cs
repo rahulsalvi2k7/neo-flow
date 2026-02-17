@@ -9,25 +9,25 @@ namespace neo.flow.core.Steps
         private readonly IReadOnlyList<(ICondition Condition, IBusinessStep Step)> _cases;
         private readonly string _name;
         private readonly IBusinessStep? _defaultStep;
-        private readonly ILogger _logger;
+        private readonly ILogger<SwitchStep>? _logger;
 
         public SwitchStep(
             string name,
             IEnumerable<(ICondition condition, IBusinessStep step)> cases,
             IBusinessStep? defaultStep = null,
-            ILogger? logger = null)
+            ILogger<SwitchStep>? logger = null)
         {
             _cases = cases.ToList();
             _name = name;
             _defaultStep = defaultStep;
-            _logger = logger ?? new TextLogger("workflow.log");
+            _logger = logger;
         }
 
         public string Name => _name;
 
         [LogExecution]
         public Task ExecuteAsync(IExecutionContext context, CancellationToken ct)
-            => LoggingDecorator.InvokeWithLoggingAsync(ExecuteCoreAsync, context, ct, Name, _logger);
+            => LoggingDecorator.InvokeWithLoggingAsync(ExecuteCoreAsync, context, ct, this, _logger);
 
         private async Task ExecuteCoreAsync(IExecutionContext context, CancellationToken ct)
         {

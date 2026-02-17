@@ -4,16 +4,16 @@ using neo.flow.core.Interfaces;
 
 namespace neo.flow.core.Steps
 {
-    public sealed class EndStep(string name, ILogger? logger = null) : IBusinessStep
+    public sealed class EndStep(string name, ILogger<EndStep>? logger = null) : IBusinessStep
     {
         public string Name => _name;
 
         private readonly string _name = name;
-        private readonly ILogger? _logger = logger;
+        private readonly ILogger<EndStep>? _logger = logger;
 
         [LogExecution]
         public Task ExecuteAsync(IExecutionContext context, CancellationToken ct)
-    => LoggingDecorator.InvokeWithLoggingAsync(ExecuteCoreAsync, context, ct, Name, _logger);
+            => LoggingDecorator.InvokeWithLoggingAsync(ExecuteCoreAsync, context, ct, this, _logger);
 
         public async Task ExecuteCoreAsync(IExecutionContext context, CancellationToken ct)
         {

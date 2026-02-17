@@ -1,6 +1,6 @@
 using neo.flow.core.Interfaces;
 
-namespace neo.flow.core.Loggers
+namespace neo.flow.core.Loggers.SvgLoggers
 {
     public abstract class SvgLogger : ILogger
     {

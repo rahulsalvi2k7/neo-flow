@@ -1,4 +1,7 @@
 ﻿using neo.flow.core.Builder;
+using neo.flow.core.Builder.Extensions;
+using neo.flow.core.logger.Console;
+using neo.flow.core.Steps;
 
 namespace neo.flow.app
 {
@@ -6,41 +9,38 @@ namespace neo.flow.app
     {
         static async Task Main(string[] args)
         {
-            var workflowBuilder = new WorkflowBuilder("sample-workflow");
+            var startStepLogger = new StartStepConsoleLogger();
+            var endStepLogger = new EndStepConsoleLogger();
 
-            var workflow = workflowBuilder
-                .Step( 
-                    
-                )
-                .Step(new ParallelBuilder("Check Name")
-                    .Branch(_logStepBuilder("1"))
-                    .Branch(_logStepBuilder("2"))
+            var workflow = new WorkflowBuilder("sample-workflow")
+            .Step(new StartStep("start1", startStepLogger))
+            .Parallel("check names", branches =>
+            {
+            branches
+                .Branch(
+                    new WorkflowBuilder("z")
+                    .Parallel(
+                        ".1",
+                        branches =>
+                        {
+                            branches
+                                .Branch(new LogStep("1.1"))
+                                .Branch(new LogStep("1.2"));
+                        })
                     .Build())
-                .Step(
-                    new EndBuilder()
-                        .Name("end1")
-                        .Build())
-                .Build();
+                .Branch(new LogStep("2"));
+            })
+            .Step(new EndStep("end1", endStepLogger))
+            .Build();
 
             var dateTimeProvider = new DateTimeProvider();
             var executionContextBuilder = new ExecutionContextBuilder();
             var executionContext = executionContextBuilder
                 .WithDateTimeProvider(dateTimeProvider)
-                .WithVariable("id", 1)
+                .WithVariable("id", Guid.NewGuid())
                 .Build();
 
             await workflow.ExecuteAsync(executionContext, CancellationToken.None);
         }
-
-        private static Func<string, Action<WorkflowBuilder>> _startStepBuilder = (s) =>
-        {
-            return (b) => b.Step(new StartBuilder(s).Build());
-        };
-
-        private static Func<string, Action<WorkflowBuilder>> _logStepBuilder = (s) =>
-        {
-            return (b) => b.Step(new LogBuilder(s).Build());
-        };
     }
 }
-

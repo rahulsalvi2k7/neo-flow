@@ -1,4 +1,4 @@
-namespace neo.flow.core.Loggers
+namespace neo.flow.core.Loggers.SvgLoggers
 {
     public class ParallelStepSvgLogger : SvgLogger
     {
