@@ -5,7 +5,7 @@ namespace neo.flow.core.Interfaces
     /// </summary>
     public interface ILogger
     {
-        Task LogExecutionAsync(string stepName, DateTime startTime, DateTime endTime, Engine.ExecutionContext context);
+        Task LogExecutionAsync(string stepName, IDateTimeProvider dateTimeProvider, IExecutionContext context);
     }
 
     /// <summary>
@@ -14,6 +14,6 @@ namespace neo.flow.core.Interfaces
     /// <typeparam name="T"></typeparam>
     public interface ILogger<T>
     {
-        Task LogExecutionAsync(T t, Engine.ExecutionContext context);
+        Task LogExecutionAsync(T t, IDateTimeProvider dateTimeProvider, IExecutionContext context);
     }
 }

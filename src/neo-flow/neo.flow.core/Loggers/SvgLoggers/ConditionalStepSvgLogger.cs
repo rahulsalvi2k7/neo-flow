@@ -1,10 +1,12 @@
+using neo.flow.core.Interfaces;
+
 namespace neo.flow.core.Loggers.SvgLoggers
 {
     public class ConditionalStepSvgLogger : SvgLogger
     {
         public ConditionalStepSvgLogger(string svgPath) : base(svgPath) { }
 
-        public override async Task LogExecutionAsync(string stepName, DateTime startTime, DateTime endTime, Engine.ExecutionContext context)
+        public override async Task LogExecutionAsync(string stepName, IDateTimeProvider dateTimeProvider, IExecutionContext context)
         {
             // Diamond with X
             var diamond = "<polygon points='50,10 90,50 50,90 10,50' style='fill:white;stroke:black;stroke-width:2' />";

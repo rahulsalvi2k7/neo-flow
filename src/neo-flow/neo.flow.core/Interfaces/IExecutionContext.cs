@@ -4,6 +4,8 @@ namespace neo.flow.core.Interfaces
 {
     public interface IExecutionContext
     {
+        IDateTimeProvider DateTimeProvider { get; }
+
         T? Get<T>(string key);
 
         Task Set<T>(string key, T value, string actor = "Unknown");

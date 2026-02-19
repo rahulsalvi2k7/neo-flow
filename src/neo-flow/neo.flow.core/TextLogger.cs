@@ -1,7 +1,3 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
-using neo.flow.core.Engine;
 using neo.flow.core.Interfaces;
 
 namespace neo.flow.core
@@ -18,13 +14,14 @@ namespace neo.flow.core
             _logFilePath = logFilePath;
         }
 
-        public async Task LogExecutionAsync(string stepName, DateTime startTime, DateTime endTime, Engine.ExecutionContext context)
+        public async Task LogExecutionAsync(string stepName, IDateTimeProvider dateTimeProvider, IExecutionContext context)
         {
-            var logEntry = $"Step: {stepName}, Start: {startTime:O}, End: {endTime:O}, Duration: {(endTime-startTime).TotalMilliseconds}ms, Context: {SerializeContext(context)}";
+            var timestamp = dateTimeProvider.UtcNow();
+            var logEntry = $"Step: {stepName}, Timestamp: {timestamp:O}, Context: {SerializeContext(context)}";
             await File.AppendAllTextAsync(_logFilePath, logEntry + Environment.NewLine);
         }
 
-        private string SerializeContext(Engine.ExecutionContext context)
+        private string SerializeContext(IExecutionContext context)
         {
             // For demonstration, just return the count of keys. Customize as needed.
             return $"Keys: {context.GetAuditTrail().Result.Count}";

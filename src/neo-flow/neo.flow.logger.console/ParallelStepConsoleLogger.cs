@@ -5,9 +5,9 @@ namespace neo.flow.core.logger.Console
 {
     public class ParallelStepConsoleLogger : ILogger<ParallelStep>
     {
-        public Task LogExecutionAsync(ParallelStep t, Engine.ExecutionContext context)
+        public Task LogExecutionAsync(ParallelStep t, IDateTimeProvider dateTimeProvider, IExecutionContext context)
         {
-            System.Console.WriteLine($"{DateTime.UtcNow:s} {t.Name}");
+            System.Console.WriteLine($"{dateTimeProvider.UtcNow():s} {t.Name}");
 
             return Task.CompletedTask;
         }

@@ -6,40 +6,51 @@ Neo-flow provides a small, composable set of primitives to build business workfl
 
 ## Features
 
-- Composable building blocks: sequential, conditional, switch, parallel, and conditional-parallel steps
-- Async-first execution with CancellationToken support
-- Extensible interfaces for custom steps and observers
-- Test coverage for core step behaviors (see `tests/neo.flow.core.tests`)
+- Composable builders and step types: sequential, conditional, switch, parallel, and conditional-parallel
+- Async-first execution with `CancellationToken` support
+- Extensible interfaces for custom steps, conditions, and observers
+- Unit tests covering core step behaviors (see tests under `tests/`)
 
 ## Quick start
 
 ### Prerequisites
-> **Note:** Neo-flow targets .NET 8.0. Use the SDK for .NET 8 or later.
+**Note:** Neo-flow targets .NET 8.0. Install the .NET 8 SDK or later.
 
 - Install .NET SDK: https://dotnet.microsoft.com/
 
-### Build and run the sample app
+### Build the solution
+
+Build the full solution from the repository root:
 
 ```bash
-dotnet build
+dotnet build src/neo-flow/neo-flow.sln
+```
+
+### Run the sample app
+
+Run the minimal console host from the solution folder:
+
+```bash
 dotnet run --project src/neo-flow/neo.flow.app/neo.flow.app.csproj
 ```
 
 ### Run tests
 
+Run all tests or individual test projects:
+
 ```bash
-dotnet test tests/neo.flow.core.tests
-dotnet test tests/neo.flow.logger.console.tests
+dotnet test tests/neo.flow.core.tests/neo.flow.core.tests.csproj
+dotnet test tests/neo.flow.logger.console.tests/neo.flow.logger.console.tests.csproj
 ```
 
 ## Key concepts
 
-- `IBusinessStep`: unit of work executed by the engine.
-- `IExecutionContext`: carries state across steps during execution.
-- `ICondition`: predicate used by conditional and switch steps.
-- `IStepObserver`: receive lifecycle events for observability and logging.
+- `IBusinessStep`: unit of work executed by the engine
+- `IExecutionContext`: carries state across steps during execution
+- `ICondition`: predicate used by conditional and switch steps
+- `IStepObserver`: receives lifecycle events for observability and logging
 
-Neo-flow ships with implementations for common composition patterns (sequential, parallel, conditional, switch, conditional-parallel) under `src/neo-flow/neo.flow.core/Steps` and fluent helpers in `src/neo-flow/neo.flow.core/Builder`.
+The repository provides implementations for common composition patterns under `src/neo-flow/neo.flow.core/Steps` and fluent helpers in `src/neo-flow/neo.flow.core/Builder`.
 
 ## Example (conceptual)
 
@@ -52,20 +63,20 @@ var workflow = new WorkflowBuilder("Example")
 await engine.RunAsync(workflow, new ExecutionContext(), CancellationToken.None);
 ```
 
-The projects under `src/neo-flow` contain core libraries and a small console app demonstrating usage:
+## Projects
 
 - `src/neo-flow/neo.flow.core` — core library with builders, steps, engine, and models
-- `src/neo-flow/neo.flow.app` — minimal host application showing how to compose and run workflows
-- `src/neo-flow/neo.flow.logger.console` — console logger helpers for development and diagnostics
+- `src/neo-flow/neo.flow.app` — minimal host application demonstrating usage
+- `src/neo-flow/neo.flow.logger.console` — console logger helpers
 
 ## Tests
 
-Unit tests live in the `tests` folder. Run them with `dotnet test` as shown above. The test projects exercise the various step types and logging components.
+Unit tests are under the `tests/` folder. Run test projects with `dotnet test` as shown above.
 
 ## Next steps
 
-- Explore `src/neo-flow/neo.flow.core/Builder` to compose workflows with the fluent API.
-- Implement `IBusinessStep` and `ICondition` for your domain logic.
-- Hook an `IStepObserver` to capture execution events for telemetry or auditing.
+- Explore `src/neo-flow/neo.flow.core/Builder` to compose workflows with the fluent API
+- Implement your domain-specific `IBusinessStep` and `ICondition`
+- Hook an `IStepObserver` to capture execution events for telemetry or auditing
 
 [//]: # (License and contribution guidelines are kept in their respective files.)

@@ -32,7 +32,7 @@ namespace neo.flow.logger.console.tests
             try
             {
                 Console.SetOut(sw);
-                await logger.LogExecutionAsync(step, execContext);
+                await logger.LogExecutionAsync(step, mockDateTimeProvider.Object, execContext);
             }
             finally
             {

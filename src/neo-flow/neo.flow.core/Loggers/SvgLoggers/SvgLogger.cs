@@ -10,6 +10,6 @@ namespace neo.flow.core.Loggers.SvgLoggers
             _svgPath = svgPath;
         }
 
-        public abstract Task LogExecutionAsync(string stepName, DateTime startTime, DateTime endTime, Engine.ExecutionContext context);
+        public abstract Task LogExecutionAsync(string stepName, IDateTimeProvider dateTimeProvider, IExecutionContext context);
     }
 }

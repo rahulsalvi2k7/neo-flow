@@ -1,10 +1,12 @@
+using neo.flow.core.Interfaces;
+
 namespace neo.flow.core.Loggers.SvgLoggers
 {
     public class StartStepSvgLogger : SvgLogger
     {
         public StartStepSvgLogger(string svgPath) : base(svgPath) { }
 
-        public override async Task LogExecutionAsync(string stepName, DateTime startTime, DateTime endTime, Engine.ExecutionContext context)
+        public override async Task LogExecutionAsync(string stepName, IDateTimeProvider dateTimeProvider, IExecutionContext context)
         {
             var x = context.Get<int>("x");
             var y = context.Get<int>("y");

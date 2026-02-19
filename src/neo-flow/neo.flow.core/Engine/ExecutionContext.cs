@@ -15,6 +15,8 @@ namespace neo.flow.core.Engine
             _dateTimeProvider = dateTimeProvider;
         }
 
+        public IDateTimeProvider DateTimeProvider => _dateTimeProvider;
+
         public T? Get<T>(string key)
             => _data.TryGetValue(key, out var value) ? (T?)value : default;
 

@@ -14,7 +14,7 @@ namespace neo.flow.core.Decorators
             T t,
             ILogger<T>? logger)
         {
-            var start = DateTime.UtcNow;
+            
             try
             {
                 await method(context, ct);
@@ -25,7 +25,7 @@ namespace neo.flow.core.Decorators
                 {
                     if (logger is not null)
                     {
-                        await logger.LogExecutionAsync(t, execContext);
+                        await logger.LogExecutionAsync(t, execContext.DateTimeProvider, execContext);
                     }
                 }
             }

@@ -49,7 +49,7 @@ namespace neo.flow.core.Steps
             {
                 await context.Set("ScriptError", ex.Message);
 
-                await _logger?.LogExecutionAsync(this, (Engine.ExecutionContext)context);
+                await _logger?.LogExecutionAsync(this, context.DateTimeProvider, context);
 
                 throw;
             }

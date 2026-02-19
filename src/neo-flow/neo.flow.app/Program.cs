@@ -16,19 +16,19 @@ namespace neo.flow.app
             .Step(new StartStep("start1", startStepLogger))
             .Parallel("check names", branches =>
             {
-            branches
-                .Branch(
-                    new WorkflowBuilder("z")
-                    .Parallel(
-                        ".1",
-                        branches =>
-                        {
-                            branches
-                                .Branch(new LogStep("1.1"))
-                                .Branch(new LogStep("1.2"));
-                        })
-                    .Build())
-                .Branch(new LogStep("2"));
+                branches
+                    .Branch(
+                        new WorkflowBuilder("z")
+                        .Parallel(
+                            name:".1",
+                            branches =>
+                            {
+                                branches
+                                    .Branch(new LogStep("1.1"))
+                                    .Branch(new LogStep("1.2"));
+                            })
+                        .Build())
+                    .Branch(new LogStep("2"));
             })
             .Step(new EndStep("end1", endStepLogger))
             .Build();
