@@ -6,7 +6,7 @@ using neo.flow.core.Steps;
 namespace neo.flow.logger.console.tests
 {
     [TestFixture]
-    public class ConditionalStepConsoleLoggerTests
+    public class HttpStepConsoleLoggerTests
     {
         private Mock<IDateTimeProvider> mockDateTimeProvider = null!;
         private core.Engine.ExecutionContext execContext = null!;
@@ -20,12 +20,12 @@ namespace neo.flow.logger.console.tests
         }
 
         [Test]
-        public async System.Threading.Tasks.Task LogExecutionAsync_WritesStepNameToConsole()
+        public async System.Threading.Tasks.Task LogExecutionAsync_WritesStepNameAndResponseToConsole()
         {
-            var logger = new ConditionalStepConsoleLogger();
-            var cond = new Mock<ICondition>();
-            var thenStep = new Mock<IBusinessStep>();
-            var step = new ConditionalStep(string.Empty, cond.Object, thenStep.Object);
+            var logger = new HttpStepConsoleLogger();
+            var step = new HttpStep("MyHttp", new System.Uri("http://example.invalid/"), System.Net.Http.HttpMethod.Get);
+
+            await execContext.Set("lastHttpResponse", "the-body");
 
             using var sw = new StringWriter();
             var original = Console.Out;
@@ -41,6 +41,7 @@ namespace neo.flow.logger.console.tests
 
             var output = sw.ToString();
             Assert.That(output, Does.Contain(step.Name));
+            Assert.That(output, Does.Contain("the-body"));
         }
     }
 }

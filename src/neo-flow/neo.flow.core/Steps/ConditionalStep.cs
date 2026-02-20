@@ -6,12 +6,14 @@ namespace neo.flow.core.Steps
 {
     public sealed class ConditionalStep : IBusinessStep
     {
+        private readonly string _name;
         private readonly ICondition _condition;
         private readonly IBusinessStep _thenStep;
         private readonly IBusinessStep? _elseStep;
         private readonly ILogger<ConditionalStep>? _logger;
 
         public ConditionalStep(
+            string name,
             ICondition condition,
             IBusinessStep thenStep,
             IBusinessStep? elseStep = null,
@@ -21,9 +23,10 @@ namespace neo.flow.core.Steps
             _thenStep = thenStep;
             _elseStep = elseStep;
             _logger = logger;
+            _name = name;
         }
 
-        public string Name => "Conditional";
+        public string Name => _name;
 
         [LogExecution]
         public Task ExecuteAsync(IExecutionContext context, CancellationToken ct)

@@ -27,9 +27,9 @@ namespace neo.flow.core.Engine
                 _ =>
                 {
                     _audit.Push(new AuditEntry(
-                        Timestamp: _dateTimeProvider.UtcNow(), 
+                        Timestamp: _dateTimeProvider.UtcNow(),
                         Key: key,
-                        OldValue: null, 
+                        OldValue: null,
                         NewValue: value,
                         Actor: actor));
                     return value;
@@ -50,7 +50,7 @@ namespace neo.flow.core.Engine
 
         public Task<List<AuditEntry>> GetAuditTrail()
         {
-          return Task.FromResult(_audit.ToList());
-        }        
+            return Task.FromResult(_audit.ToList());
+        }
     }
 }

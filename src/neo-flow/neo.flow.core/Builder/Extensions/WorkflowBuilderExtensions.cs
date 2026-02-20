@@ -5,11 +5,12 @@ namespace neo.flow.core.Builder.Extensions
     public static class WorkflowBuilderExtensions
     {
         public static WorkflowBuilder If(this WorkflowBuilder builder,
+            string name,
             ICondition condition,
             Action<WorkflowBuilder> then,
             Action<WorkflowBuilder>? @else = null)
         {
-            var conditional = new ConditionalBuilder(condition)
+            var conditional = new ConditionalBuilder(name, condition)
                 .Then(then);
 
             if (@else != null)

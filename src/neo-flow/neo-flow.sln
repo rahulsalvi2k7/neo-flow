@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neo.flow.logger.console", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neo.flow.logger.console.tests", "..\..\tests\neo.flow.logger.console.tests\neo.flow.logger.console.tests.csproj", "{2E5AAA5F-4432-4D5B-B06F-B7BB0FE3FE90}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neo.flow.logger.file", "neo.flow.logger.file\neo.flow.logger.file.csproj", "{86899A5F-600C-4AAB-9DBC-9939BAABE54E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neo.flow.logger.file.tests", "..\..\tests\neo.flow.logger.file.tests\neo.flow.logger.file.tests.csproj", "{2F1DC5E1-9E9B-4EC7-8552-D19CDC5D87B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{2E5AAA5F-4432-4D5B-B06F-B7BB0FE3FE90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E5AAA5F-4432-4D5B-B06F-B7BB0FE3FE90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E5AAA5F-4432-4D5B-B06F-B7BB0FE3FE90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86899A5F-600C-4AAB-9DBC-9939BAABE54E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86899A5F-600C-4AAB-9DBC-9939BAABE54E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86899A5F-600C-4AAB-9DBC-9939BAABE54E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86899A5F-600C-4AAB-9DBC-9939BAABE54E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F1DC5E1-9E9B-4EC7-8552-D19CDC5D87B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F1DC5E1-9E9B-4EC7-8552-D19CDC5D87B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F1DC5E1-9E9B-4EC7-8552-D19CDC5D87B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F1DC5E1-9E9B-4EC7-8552-D19CDC5D87B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,7 +1,4 @@
-using neo.flow.core.Engine;
 using neo.flow.core.Interfaces;
-using neo.flow.core.Models;
-using System.Collections.Generic;
 
 namespace neo.flow.core.Builder
 {
@@ -37,7 +34,7 @@ namespace neo.flow.core.Builder
             ArgumentNullException.ThrowIfNull(_dateTimeProvider);
 
             var context = new Engine.ExecutionContext(_dateTimeProvider);
-            
+
             foreach (var kvp in _initialData)
             {
                 // Set initial variables synchronously

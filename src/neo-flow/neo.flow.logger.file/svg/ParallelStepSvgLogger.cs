@@ -1,6 +1,6 @@
 using neo.flow.core.Interfaces;
 
-namespace neo.flow.core.Loggers.SvgLoggers
+namespace neo.flow.logger.file.svg
 {
     public class ParallelStepSvgLogger : SvgLogger
     {

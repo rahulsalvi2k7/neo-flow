@@ -1,11 +1,6 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
-using neo.flow.core.Engine;
 using neo.flow.core.Interfaces;
-using neo.flow.core.Steps;
 
-namespace neo.flow.core.Loggers.SvgLoggers
+namespace neo.flow.logger.file.svg
 {
     public class EndStepSvgLogger : SvgLogger
     {
@@ -17,10 +12,10 @@ namespace neo.flow.core.Loggers.SvgLoggers
             var y = context.Get<int>("y");
 
             // Circle with square inside
-            var circle = $"<circle cx='{x+50}' cy='{y+50}' r='40' fill='white' stroke='black' stroke-width='2' />";
+            var circle = $"<circle cx='{x + 50}' cy='{y + 50}' r='40' fill='white' stroke='black' stroke-width='2' />";
 
             // Square centered in the circle
-            var square = $"<rect x='{x+30}' y='{y+30}' width='40' height='40' fill='black' />";
+            var square = $"<rect x='{x + 30}' y='{y + 30}' width='40' height='40' fill='black' />";
 
             var svg = $"{circle}{square}";
 

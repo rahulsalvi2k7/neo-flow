@@ -14,7 +14,7 @@ namespace neo.flow.core.Decorators
             T t,
             ILogger<T>? logger)
         {
-            
+
             try
             {
                 await method(context, ct);

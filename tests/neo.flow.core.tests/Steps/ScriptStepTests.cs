@@ -1,10 +1,6 @@
-using neo.flow.core.Builder;
-using neo.flow.core.Engine;
+using Moq;
 using neo.flow.core.Interfaces;
 using neo.flow.core.Steps;
-using System.Threading.Tasks;
-using NUnit.Framework;
-using Moq;
 
 namespace neo.flow.core.Tests.Steps
 {

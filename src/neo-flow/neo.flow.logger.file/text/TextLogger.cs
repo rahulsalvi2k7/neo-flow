@@ -1,6 +1,6 @@
 using neo.flow.core.Interfaces;
 
-namespace neo.flow.core
+namespace neo.flow.logger.file.text
 {
     /// <summary>
     /// Simple text logger implementation for workflow steps.

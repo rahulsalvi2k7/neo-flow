@@ -9,7 +9,7 @@ namespace neo.flow.core.Steps
         public string Name => _name;
 
         private readonly string _name = name;
-        private readonly ILogger<StartStep> _logger = logger;
+        private readonly ILogger<StartStep>? _logger = logger;
 
         [LogExecution]
         public Task ExecuteAsync(IExecutionContext context, CancellationToken ct)

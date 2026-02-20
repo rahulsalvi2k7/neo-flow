@@ -1,8 +1,6 @@
-using System.Threading;
 using Moq;
 using neo.flow.core.Interfaces;
 using neo.flow.core.Steps;
-using NUnit.Framework;
 
 namespace neo.flow.core.tests.Steps
 {
@@ -29,7 +27,7 @@ namespace neo.flow.core.tests.Steps
                 .Setup(m => m.Evaluate(It.IsAny<IExecutionContext>()))
                 .Returns(true);
 
-            var conditionalStep = new ConditionalStep(mockCondition.Object, mockBusinessStep.Object);
+            var conditionalStep = new ConditionalStep(string.Empty, mockCondition.Object, mockBusinessStep.Object);
 
             // Act
             await conditionalStep.ExecuteAsync(mockIExecutionContext.Object, CancellationToken.None);
@@ -47,7 +45,7 @@ namespace neo.flow.core.tests.Steps
                 .Returns(false);
 
             var mockElseStep = new Mock<IBusinessStep>();
-            var conditionalStep = new ConditionalStep(mockCondition.Object, mockBusinessStep.Object, mockElseStep.Object);
+            var conditionalStep = new ConditionalStep(string.Empty, mockCondition.Object, mockBusinessStep.Object, mockElseStep.Object);
 
             // Act
             await conditionalStep.ExecuteAsync(mockIExecutionContext.Object, CancellationToken.None);
@@ -65,7 +63,7 @@ namespace neo.flow.core.tests.Steps
                 .Setup(m => m.Evaluate(It.IsAny<IExecutionContext>()))
                 .Returns(false);
 
-            var conditionalStep = new ConditionalStep(mockCondition.Object, mockBusinessStep.Object);
+            var conditionalStep = new ConditionalStep(string.Empty, mockCondition.Object, mockBusinessStep.Object);
 
             // Act
             await conditionalStep.ExecuteAsync(mockIExecutionContext.Object, CancellationToken.None);
@@ -78,7 +76,7 @@ namespace neo.flow.core.tests.Steps
         public void Name_ReturnsConditional()
         {
             // Arrange
-            var conditionalStep = new ConditionalStep(Mock.Of<ICondition>(), Mock.Of<IBusinessStep>());
+            var conditionalStep = new ConditionalStep("Conditional", Mock.Of<ICondition>(), Mock.Of<IBusinessStep>());
 
             // Act / Assert
             Assert.That(conditionalStep.Name, Is.EqualTo("Conditional"));

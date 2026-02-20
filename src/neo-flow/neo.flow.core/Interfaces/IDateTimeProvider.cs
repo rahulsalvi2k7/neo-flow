@@ -1,6 +1,6 @@
 ﻿namespace neo.flow.core.Interfaces
 {
-    public interface IDateTimeProvider 
+    public interface IDateTimeProvider
     {
         DateTime UtcNow();
     }

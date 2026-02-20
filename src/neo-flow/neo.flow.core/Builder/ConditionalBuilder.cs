@@ -5,12 +5,14 @@ namespace neo.flow.core.Builder
 {
     public sealed class ConditionalBuilder
     {
+        private readonly string _name;
         private readonly ICondition _condition;
         private readonly WorkflowBuilder _thenBuilder;
         private WorkflowBuilder? _elseBuilder;
 
-        public ConditionalBuilder(ICondition condition)
+        public ConditionalBuilder(string name, ICondition condition)
         {
+            _name = name;
             _condition = condition;
             _thenBuilder = new WorkflowBuilder("Then");
         }
@@ -31,6 +33,7 @@ namespace neo.flow.core.Builder
         public IBusinessStep Build()
         {
             return new ConditionalStep(
+                _name,
                 _condition,
                 _thenBuilder.Build(),
                 _elseBuilder?.Build()

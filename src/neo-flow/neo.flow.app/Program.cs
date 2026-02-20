@@ -20,7 +20,7 @@ namespace neo.flow.app
                     .Branch(
                         new WorkflowBuilder("z")
                         .Parallel(
-                            name:".1",
+                            name: ".1",
                             branches =>
                             {
                                 branches
