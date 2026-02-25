@@ -51,5 +51,15 @@ namespace neo.flow.core.Builder.Extensions
             builder.Step(cpb.Build(name));
             return builder;
         }
+
+        public static WorkflowBuilder Sequential(this WorkflowBuilder builder,
+            string name,
+            Action<SequentialBuilder> configure)
+        {
+            var pb = new SequentialBuilder(name);
+            configure(pb);
+            builder.Step(pb.Build());
+            return builder;
+        }
     }
 }

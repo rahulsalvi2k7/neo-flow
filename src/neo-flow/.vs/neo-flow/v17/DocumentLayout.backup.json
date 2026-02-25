@@ -1,12 +1,37 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Study\\git\\rahulsalvi2k7\\neo-flow\\src\\neo-flow\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{05AEEF7C-F10B-43E7-9154-6943845AB561}|neo.flow.app\\neo.flow.app.csproj|d:\\study\\git\\rahulsalvi2k7\\neo-flow\\src\\neo-flow\\neo.flow.app\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05AEEF7C-F10B-43E7-9154-6943845AB561}|neo.flow.app\\neo.flow.app.csproj|solutionrelative:neo.flow.app\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Study\\git\\rahulsalvi2k7\\neo-flow\\src\\neo-flow\\neo.flow.app\\Program.cs",
+              "RelativeDocumentMoniker": "neo.flow.app\\Program.cs",
+              "ToolTip": "D:\\Study\\git\\rahulsalvi2k7\\neo-flow\\src\\neo-flow\\neo.flow.app\\Program.cs",
+              "RelativeToolTip": "neo.flow.app\\Program.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAuwFsAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T06:45:33.588Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

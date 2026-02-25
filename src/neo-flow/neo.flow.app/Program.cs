@@ -7,18 +7,19 @@ namespace neo.flow.app
 {
     internal class Program
     {
-        private static StartStepConsoleLogger startStepLogger = new StartStepConsoleLogger();
-        private static EndStepConsoleLogger endStepLogger = new EndStepConsoleLogger();
+        private static readonly StartStepConsoleLogger startStepLogger = new();
+        private static readonly EndStepConsoleLogger endStepLogger = new();
 
-        private static StartStep startStep = new StartStep("start1", startStepLogger);
-        private static EndStep endStep1 = new EndStep("end1", endStepLogger);
+        private static readonly StartStep startStep = new("start1", startStepLogger);
+        private static readonly EndStep endStep1 = new("end1", endStepLogger);
 
-        private static LogStep logSteps_1_1 = new LogStep("1_1");
-        private static LogStep logSteps_1_2 = new LogStep("1_2");
-        
-        private static Action<ConditionalParallelBuilder> checkNames = branches =>
-        {
-            branches
+        private static readonly LogStep logSteps_1 = new("1");
+        private static readonly LogStep logSteps_1_1 = new("1_1");
+        private static readonly LogStep logSteps_1_2 = new("1_2");
+        private static readonly LogStep logSteps_2 = new("2");
+        private static readonly LogStep logSteps_3 = new("3");
+
+        private static readonly Action<ConditionalParallelBuilder> checkNames = branches => branches
                 .When(
                     condition: new ContainsSpaceCondition(),
                     build: b => new WorkflowBuilder("a")
@@ -34,13 +35,10 @@ namespace neo.flow.app
                         .Step(new LogStep("c.1"))
                         .Build()
                 );
-        };
 
-        private static Action<ParallelBuilder> logNames = branches =>
-        {
-            branches
+        private static readonly Action<ParallelBuilder> logNames = branches => branches
                 .Branch(
-                    new WorkflowBuilder("z")
+                    new WorkflowBuilder("y")
                     .Parallel(
                         name: ".1",
                         branches =>
@@ -50,25 +48,51 @@ namespace neo.flow.app
                                 .Branch(logSteps_1_2);
                         })
                     .Build())
-                .Branch(new LogStep("2"));
+                .Branch(logSteps_2);
+
+        private static readonly Action<SequentialBuilder> logNamesSeq = branches =>
+        {
+            branches
+                .Branch(
+                    new WorkflowBuilder("z")
+                    .Parallel(
+                        name: ".2",
+                        branches =>
+                        {
+                            branches
+                                .Branch(logSteps_1_1)
+                                .Branch(logSteps_1_2);
+                        })
+                    .Build())
+                .Branch(logSteps_3);
         };
 
         static async Task Main(string[] args)
-        {            
+        {
+            // Build the workflow
             var workflow = new WorkflowBuilder("sample-workflow")
                 .Step(startStep)
+                .Step(logSteps_1)
                 .Parallel("log names", logNames)
                 .ConditionalParallel("check if names", checkNames)
+                .Sequential("log names seq", logNamesSeq)
+                .Step(logSteps_3)
                 .Step(endStep1)
             .Build();
 
+            // Build dependencies 
             var dateTimeProvider = new DateTimeProvider();
+
+            // Build execution context
             var executionContextBuilder = new ExecutionContextBuilder();
+
             var executionContext = executionContextBuilder
                 .WithDateTimeProvider(dateTimeProvider)
                 .WithVariable("id", Guid.NewGuid())
+                .WithVariable("names", new[] { "John Doe", "Jane Doe" })
                 .Build();
 
+            // Execute the workflow
             await workflow.ExecuteAsync(executionContext, CancellationToken.None);
         }
     }
