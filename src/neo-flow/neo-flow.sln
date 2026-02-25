@@ -17,6 +17,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neo.flow.logger.file", "neo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neo.flow.logger.file.tests", "..\..\tests\neo.flow.logger.file.tests\neo.flow.logger.file.tests.csproj", "{2F1DC5E1-9E9B-4EC7-8552-D19CDC5D87B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neo.flow.data", "neo.flow.data\neo.flow.data.csproj", "{904C84FC-F436-4890-8B64-11723AF7ADF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neo.flow.api", "neo.flow.api\neo.flow.api.csproj", "{DFB19D5A-70B0-44AC-86E9-552DBFE3F78B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,9 +57,22 @@ Global
 		{2F1DC5E1-9E9B-4EC7-8552-D19CDC5D87B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F1DC5E1-9E9B-4EC7-8552-D19CDC5D87B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F1DC5E1-9E9B-4EC7-8552-D19CDC5D87B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{904C84FC-F436-4890-8B64-11723AF7ADF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{904C84FC-F436-4890-8B64-11723AF7ADF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{904C84FC-F436-4890-8B64-11723AF7ADF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{904C84FC-F436-4890-8B64-11723AF7ADF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFB19D5A-70B0-44AC-86E9-552DBFE3F78B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFB19D5A-70B0-44AC-86E9-552DBFE3F78B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFB19D5A-70B0-44AC-86E9-552DBFE3F78B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFB19D5A-70B0-44AC-86E9-552DBFE3F78B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{40651D64-5813-42CC-A1E5-604A3D570AE7} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{2E5AAA5F-4432-4D5B-B06F-B7BB0FE3FE90} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{2F1DC5E1-9E9B-4EC7-8552-D19CDC5D87B1} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {92098521-1538-43C1-BA8D-D1EBDB9B1F94}
