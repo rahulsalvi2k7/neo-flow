@@ -6,7 +6,7 @@ using neo.flow.core.Steps;
 namespace neo.flow.logger.console.tests
 {
     [TestFixture]
-    public class ConditionalStepConsoleLoggerTests
+    public class BusinessStepConsoleLoggerTests
     {
         private Mock<IDateTimeProvider> mockDateTimeProvider = null!;
         private core.Engine.ExecutionContext execContext = null!;
@@ -22,17 +22,16 @@ namespace neo.flow.logger.console.tests
         [Test]
         public async System.Threading.Tasks.Task LogExecutionAsync_WritesStepNameToConsole()
         {
-            var logger = new ConditionalStepConsoleLogger();
-            var cond = new Mock<ICondition>();
-            var thenStep = new Mock<IBusinessStep>();
-            var step = new ConditionalStep(string.Empty, cond.Object, thenStep.Object);
+            var logger = new BusinessStepConsoleLogger();
+            var branches = new System.Collections.Generic.List<(ICondition, IBusinessStep)>();
+            var step = new ConditionalParallelStep("MyCondPar", branches);
 
             using var sw = new StringWriter();
             var original = Console.Out;
             try
             {
                 Console.SetOut(sw);
-                await logger.LogExecutionAsync(step, mockDateTimeProvider.Object, execContext);
+                await logger.LogExecutionAsync(step, execContext);
             }
             finally
             {

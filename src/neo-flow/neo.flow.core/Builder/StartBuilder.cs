@@ -6,7 +6,7 @@ namespace neo.flow.core.Builder
     public sealed class StartBuilder
     {
         private string? _name;
-        private ILogger<StartStep>? _logger;
+        private ILogger<IBusinessStep>? _logger;
 
         public StartBuilder(string name)
         {
@@ -19,7 +19,7 @@ namespace neo.flow.core.Builder
             return this;
         }
 
-        public StartBuilder Logger(ILogger<StartStep>? logger)
+        public StartBuilder Logger(ILogger<IBusinessStep>? logger)
         {
             _logger = logger;
             return this;
@@ -27,7 +27,7 @@ namespace neo.flow.core.Builder
 
         public IBusinessStep Build()
         {
-            return new StartStep(_name ?? "Start", _logger);
+            return new StartStep(_name ?? "End");
         }
     }
 }

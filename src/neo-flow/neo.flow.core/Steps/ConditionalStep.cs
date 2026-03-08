@@ -1,6 +1,4 @@
-﻿using neo.flow.core.Attributes;
-using neo.flow.core.Decorators;
-using neo.flow.core.Interfaces;
+﻿using neo.flow.core.Interfaces;
 
 namespace neo.flow.core.Steps
 {
@@ -10,29 +8,22 @@ namespace neo.flow.core.Steps
         private readonly ICondition _condition;
         private readonly IBusinessStep _thenStep;
         private readonly IBusinessStep? _elseStep;
-        private readonly ILogger<ConditionalStep>? _logger;
 
         public ConditionalStep(
             string name,
             ICondition condition,
             IBusinessStep thenStep,
-            IBusinessStep? elseStep = null,
-            ILogger<ConditionalStep>? logger = null)
+            IBusinessStep? elseStep = null)
         {
             _condition = condition;
             _thenStep = thenStep;
             _elseStep = elseStep;
-            _logger = logger;
             _name = name;
         }
 
         public string Name => _name;
 
-        [LogExecution]
-        public Task ExecuteAsync(IExecutionContext context, CancellationToken ct)
-            => LoggingDecorator.InvokeWithLoggingAsync(ExecuteCoreAsync, context, ct, this, _logger);
-
-        private async Task ExecuteCoreAsync(IExecutionContext context, CancellationToken ct)
+        public async Task ExecuteCoreAsync(IExecutionContext context, CancellationToken ct)
         {
             if (_condition.Evaluate(context))
             {

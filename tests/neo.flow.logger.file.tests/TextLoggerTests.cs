@@ -39,7 +39,7 @@ namespace neo.flow.logger.file.tests
         private class FakeBusinessStep : IBusinessStep
         {
             public string Name => "Fake";
-            public Task ExecuteAsync(IExecutionContext context, CancellationToken ct) => Task.CompletedTask;
+            public Task ExecuteCoreAsync(IExecutionContext context, CancellationToken ct) => Task.CompletedTask;
         }
 
         private static string NewTempFilePath() => Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".log");
@@ -56,7 +56,7 @@ namespace neo.flow.logger.file.tests
 
                 var logger = new TextLogger(path);
 
-                await logger.LogExecutionAsync("MyStep", dtp, ctx);
+                await logger.LogExecutionAsync("MyStep", ctx);
 
                 var content = File.ReadAllText(path);
                 Assert.That(content, Does.Contain($"Step: MyStep"));
@@ -76,7 +76,7 @@ namespace neo.flow.logger.file.tests
 
                 // Each logger in this project returns a Task from File.AppendAllTextAsync
                 // but most implementations are non-async and return the Task directly.
-                await logger.LogExecutionAsync(step, dtp, ctx);
+                await logger.LogExecutionAsync(step, ctx);
 
                 var content = File.ReadAllText(path);
             }
@@ -93,10 +93,10 @@ namespace neo.flow.logger.file.tests
                 var dtp = new FakeDateTimeProvider(now);
                 var ctx = new FakeExecutionContext(dtp);
 
-                var logger = new StartStepTextLogger(path);
+                var logger = new BusinessStepTextLogger(path);
                 var step = new StartStep("StartName");
 
-                await logger.LogExecutionAsync(step, dtp, ctx);
+                await logger.LogExecutionAsync(step, ctx);
 
                 var content = File.ReadAllText(path);
                 Assert.That(content, Does.Contain("StartName"));
@@ -115,13 +115,13 @@ namespace neo.flow.logger.file.tests
             // list of (logger instance, step instance, expected name)
             var tests = new List<(Func<string, object> makeLogger, object step, string expectedName)>
             {
-                (p => new LogStepTextLogger(p), new LogStep("LogName"), "LogName"),
-                (p => new ScriptStepTextLogger(p), new ScriptStep("ScriptName", string.Empty), "ScriptName"),
-                (p => new ParallelStepTextLogger(p), new ParallelStep("ParallelName"), "ParallelName"),
-                (p => new ConditionalStepTextLogger(p), new ConditionalStep("ConditionalName", new FakeCondition(), new FakeBusinessStep()), "2022-03-04T05:06:07"),
-                (p => new ConditionalParallelStepTextLogger(p), new ConditionalParallelStep("CondParName", new List<(ICondition, IBusinessStep)>()), "CondParName"),
-                (p => new EndStepTextLogger(p), new EndStep("EndName"), "EndName"),
-                (p => new SwitchStepTextLogger(p), new SwitchStep("SwitchName", new List<(ICondition, IBusinessStep)>()), "SwitchName"),
+                (p => new BusinessStepTextLogger(p), new LogStep("LogName"), "LogName"),
+                (p => new BusinessStepTextLogger(p), new ScriptStep("ScriptName", string.Empty), "ScriptName"),
+                (p => new BusinessStepTextLogger(p), new ParallelStep("ParallelName"), "ParallelName"),
+                (p => new BusinessStepTextLogger(p), new ConditionalStep("ConditionalName", new FakeCondition(), new FakeBusinessStep()), "2022-03-04T05:06:07"),
+                (p => new BusinessStepTextLogger(p), new ConditionalParallelStep("CondParName", new List<(ICondition, IBusinessStep)>()), "CondParName"),
+                (p => new BusinessStepTextLogger(p), new EndStep("EndName"), "EndName"),
+                (p => new BusinessStepTextLogger(p), new SwitchStep("SwitchName", new List<(ICondition, IBusinessStep)>()), "SwitchName"),
             };
 
             foreach (var (makeLogger, stepObj, expectedName) in tests)
@@ -135,7 +135,7 @@ namespace neo.flow.logger.file.tests
                     dynamic logger = loggerObj;
                     dynamic step = stepObj;
 
-                    await logger.LogExecutionAsync(step, dtp, ctx);
+                    await logger.LogExecutionAsync(step, ctx);
 
                     var content = File.ReadAllText(path);
                     Assert.That(content, Does.Contain(expectedName));

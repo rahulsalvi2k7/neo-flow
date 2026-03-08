@@ -8,7 +8,7 @@ namespace neo.flow.core.Base
 
         public virtual string Name => GetType().Name;
 
-        public async Task ExecuteAsync(IExecutionContext context, CancellationToken ct)
+        public async Task ExecuteCoreAsync(IExecutionContext context, CancellationToken ct)
         {
             foreach (var step in Steps)
             {

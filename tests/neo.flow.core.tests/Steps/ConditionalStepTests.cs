@@ -30,10 +30,14 @@ namespace neo.flow.core.tests.Steps
             var conditionalStep = new ConditionalStep(string.Empty, mockCondition.Object, mockBusinessStep.Object);
 
             // Act
-            await conditionalStep.ExecuteAsync(mockIExecutionContext.Object, CancellationToken.None);
+            await conditionalStep.ExecuteCoreAsync(mockIExecutionContext.Object, CancellationToken.None);
 
             // Assert
-            mockBusinessStep.Verify(m => m.ExecuteAsync(mockIExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
+            mockBusinessStep.Verify(m => m.ExecuteAsync(
+                mockIExecutionContext.Object,
+                It.IsAny<CancellationToken>(),
+                null,
+                null), Times.Once);
         }
 
         [Test]
@@ -48,11 +52,22 @@ namespace neo.flow.core.tests.Steps
             var conditionalStep = new ConditionalStep(string.Empty, mockCondition.Object, mockBusinessStep.Object, mockElseStep.Object);
 
             // Act
-            await conditionalStep.ExecuteAsync(mockIExecutionContext.Object, CancellationToken.None);
+            await conditionalStep.ExecuteCoreAsync(
+                mockIExecutionContext.Object,
+                CancellationToken.None);
 
             // Assert
-            mockElseStep.Verify(m => m.ExecuteAsync(mockIExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
-            mockBusinessStep.Verify(m => m.ExecuteAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()), Times.Never);
+            mockElseStep.Verify(m => m.ExecuteAsync(
+                mockIExecutionContext.Object,
+                It.IsAny<CancellationToken>(),
+                null,
+                null), Times.Once);
+
+            mockBusinessStep.Verify(m => m.ExecuteAsync(
+                It.IsAny<IExecutionContext>(),
+                It.IsAny<CancellationToken>(),
+                null,
+                null), Times.Never);
         }
 
         [Test]
@@ -66,10 +81,10 @@ namespace neo.flow.core.tests.Steps
             var conditionalStep = new ConditionalStep(string.Empty, mockCondition.Object, mockBusinessStep.Object);
 
             // Act
-            await conditionalStep.ExecuteAsync(mockIExecutionContext.Object, CancellationToken.None);
+            await conditionalStep.ExecuteCoreAsync(mockIExecutionContext.Object, CancellationToken.None);
 
             // Assert
-            mockBusinessStep.Verify(m => m.ExecuteAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()), Times.Never);
+            mockBusinessStep.Verify(m => m.ExecuteCoreAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Test]

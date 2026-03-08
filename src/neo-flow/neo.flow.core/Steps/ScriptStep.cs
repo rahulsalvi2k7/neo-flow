@@ -1,5 +1,3 @@
-using neo.flow.core.Attributes;
-using neo.flow.core.Decorators;
 using neo.flow.core.Interfaces;
 
 namespace neo.flow.core.Steps
@@ -11,22 +9,16 @@ namespace neo.flow.core.Steps
     {
         private readonly string _name;
         private readonly string _script;
-        private readonly ILogger<ScriptStep>? _logger;
 
-        public ScriptStep(string name, string script, ILogger<ScriptStep>? logger = null)
+        public ScriptStep(string name, string script)
         {
             _name = name;
             _script = script ?? throw new ArgumentNullException(nameof(script));
-            _logger = logger;
         }
 
         public string Name => _name;
 
-        [LogExecution]
-        public Task ExecuteAsync(IExecutionContext context, CancellationToken cancellationToken)
-            => LoggingDecorator.InvokeWithLoggingAsync(ExecuteCoreAsync, context, cancellationToken, this, _logger);
-
-        private async Task ExecuteCoreAsync(IExecutionContext context, CancellationToken cancellationToken)
+        public async Task ExecuteCoreAsync(IExecutionContext context, CancellationToken cancellationToken)
         {
             try
             {
@@ -48,8 +40,6 @@ namespace neo.flow.core.Steps
             catch (Exception ex)
             {
                 await context.Set("ScriptError", ex.Message);
-
-                await _logger?.LogExecutionAsync(this, context.DateTimeProvider, context);
 
                 throw;
             }

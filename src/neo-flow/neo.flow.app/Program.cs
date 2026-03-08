@@ -7,11 +7,11 @@ namespace neo.flow.app
 {
     internal class Program
     {
-        private static readonly StartStepConsoleLogger startStepLogger = new();
-        private static readonly EndStepConsoleLogger endStepLogger = new();
+        private static readonly BusinessStepConsoleLogger startStepLogger = new();
+        private static readonly BusinessStepConsoleLogger endStepLogger = new();
 
-        private static readonly StartStep startStep = new("start1", startStepLogger);
-        private static readonly EndStep endStep1 = new("end1", endStepLogger);
+        private static readonly StartStep startStep = new("start1");
+        private static readonly EndStep endStep1 = new("end1");
 
         private static readonly LogStep logSteps_1 = new("1");
         private static readonly LogStep logSteps_1_1 = new("1_1");

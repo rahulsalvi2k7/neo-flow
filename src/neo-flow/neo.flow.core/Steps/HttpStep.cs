@@ -1,5 +1,3 @@
-using neo.flow.core.Attributes;
-using neo.flow.core.Decorators;
 using neo.flow.core.Interfaces;
 using System.Text;
 
@@ -14,13 +12,8 @@ namespace neo.flow.core.Steps
         private readonly HttpMethod _method = method;
         private readonly string? _content = content;
         private readonly HttpClient? _httpClient = httpClient;
-        private readonly ILogger<HttpStep>? _logger = logger;
 
-        [LogExecution]
-        public Task ExecuteAsync(IExecutionContext context, CancellationToken ct)
-            => LoggingDecorator.InvokeWithLoggingAsync(ExecuteCoreAsync, context, ct, this, _logger);
-
-        private async Task ExecuteCoreAsync(IExecutionContext context, CancellationToken ct)
+        public async Task ExecuteCoreAsync(IExecutionContext context, CancellationToken ct)
         {
             using var client = _httpClient ?? new HttpClient();
 

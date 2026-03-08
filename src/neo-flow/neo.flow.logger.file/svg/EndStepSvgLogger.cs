@@ -6,7 +6,7 @@ namespace neo.flow.logger.file.svg
     {
         public EndStepSvgLogger(string svgPath) : base(svgPath) { }
 
-        public override async Task LogExecutionAsync(string stepName, IDateTimeProvider dateTimeProvider, IExecutionContext context)
+        public override async Task LogExecutionAsync(string stepName, IExecutionContext context)
         {
             var x = context.Get<int>("x");
             var y = context.Get<int>("y");

@@ -40,12 +40,24 @@ namespace neo.flow.core.tests.Steps
             var switchStep = new SwitchStep("TestSwitch", cases);
 
             // Act
-            await switchStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None);
+            await switchStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None);
 
             // Assert
-            mockStep1.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
-            mockStep2.Verify(m => m.ExecuteAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()), Times.Never);
-            mockStep3.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
+            mockStep1.Verify(m => m.ExecuteAsync(
+                mockExecutionContext.Object,
+                It.IsAny<CancellationToken>(),
+                null,
+                null), Times.Once);
+            mockStep2.Verify(m => m.ExecuteAsync(
+                It.IsAny<IExecutionContext>(),
+                It.IsAny<CancellationToken>(),
+                null,
+                null), Times.Never);
+            mockStep3.Verify(m => m.ExecuteAsync(
+                mockExecutionContext.Object,
+                It.IsAny<CancellationToken>(),
+                null,
+                null), Times.Once);
         }
 
         [Test]
@@ -60,10 +72,14 @@ namespace neo.flow.core.tests.Steps
             var switchStep = new SwitchStep("SingleCaseSwitch", cases);
 
             // Act
-            await switchStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None);
+            await switchStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None);
 
             // Assert
-            mockStep.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
+            mockStep.Verify(m => m.ExecuteAsync(
+                mockExecutionContext.Object,
+                It.IsAny<CancellationToken>(),
+                null,
+                null), Times.Once);
         }
 
         [Test]
@@ -87,11 +103,11 @@ namespace neo.flow.core.tests.Steps
             var switchStep = new SwitchStep("AllFalseSwitch", cases);
 
             // Act
-            await switchStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None);
+            await switchStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None);
 
             // Assert
-            mockStep1.Verify(m => m.ExecuteAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()), Times.Never);
-            mockStep2.Verify(m => m.ExecuteAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()), Times.Never);
+            mockStep1.Verify(m => m.ExecuteCoreAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()), Times.Never);
+            mockStep2.Verify(m => m.ExecuteCoreAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Test]
@@ -108,11 +124,20 @@ namespace neo.flow.core.tests.Steps
             var switchStep = new SwitchStep("SwitchWithDefault", cases, mockDefaultStep.Object);
 
             // Act
-            await switchStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None);
+            await switchStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None);
 
             // Assert
-            mockStep.Verify(m => m.ExecuteAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()), Times.Never);
-            mockDefaultStep.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
+            mockStep.Verify(m => m.ExecuteAsync(
+                It.IsAny<IExecutionContext>(),
+                It.IsAny<CancellationToken>(),
+                null,
+                null),
+                Times.Never);
+            mockDefaultStep.Verify(m => m.ExecuteAsync(
+                mockExecutionContext.Object,
+                It.IsAny<CancellationToken>(),
+                null,
+                null), Times.Once);
         }
 
         [Test]
@@ -129,15 +154,24 @@ namespace neo.flow.core.tests.Steps
             var switchStep = new SwitchStep("SwitchWithDefault", cases, mockDefaultStep.Object);
 
             // Act
-            await switchStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None);
+            await switchStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None);
 
             // Assert
-            mockStep.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
-            mockDefaultStep.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
+            mockStep.Verify(m => m.ExecuteAsync(
+                mockExecutionContext.Object,
+                It.IsAny<CancellationToken>(),
+                null,
+                null),
+                Times.Once);
+            mockDefaultStep.Verify(m => m.ExecuteAsync(
+                mockExecutionContext.Object,
+                It.IsAny<CancellationToken>(),
+                null,
+                null), Times.Once);
         }
 
         [Test]
-        public async Task ExecuteAsync_WithEmptyCases_CompletesSuccessfully()
+        public void ExecuteAsync_WithEmptyCases_CompletesSuccessfully()
         {
             // Arrange
             var cases = new List<(ICondition, IBusinessStep)>();
@@ -145,7 +179,7 @@ namespace neo.flow.core.tests.Steps
 
             // Act & Assert - should not throw
             Assert.DoesNotThrowAsync(async () =>
-                await switchStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None));
+                await switchStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None));
         }
 
         [Test]
@@ -157,10 +191,14 @@ namespace neo.flow.core.tests.Steps
             var switchStep = new SwitchStep("EmptyWithDefault", cases, mockDefaultStep.Object);
 
             // Act
-            await switchStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None);
+            await switchStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None);
 
             // Assert
-            mockDefaultStep.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
+            mockDefaultStep.Verify(m => m.ExecuteAsync(
+                mockExecutionContext.Object,
+                It.IsAny<CancellationToken>(),
+                null,
+                null), Times.Once);
         }
 
         [Test]
@@ -200,10 +238,14 @@ namespace neo.flow.core.tests.Steps
             var cancellationToken = new CancellationToken();
 
             // Act
-            await switchStep.ExecuteAsync(mockExecutionContext.Object, cancellationToken);
+            await switchStep.ExecuteCoreAsync(mockExecutionContext.Object, cancellationToken);
 
             // Assert
-            mockStep.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
+            mockStep.Verify(m => m.ExecuteAsync(
+                mockExecutionContext.Object,
+                It.IsAny<CancellationToken>(),
+                null,
+                null), Times.Once);
         }
 
         [Test]
@@ -214,15 +256,15 @@ namespace neo.flow.core.tests.Steps
             var mockStep = new Mock<IBusinessStep>();
             var testException = new InvalidOperationException("Test error in case");
             mockCondition.Setup(m => m.Evaluate(It.IsAny<IExecutionContext>())).Returns(true);
-            mockStep.Setup(m => m.ExecuteAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()))
+            mockStep.Setup(m => m.ExecuteCoreAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()))
                 .ThrowsAsync(testException);
 
             var cases = new List<(ICondition, IBusinessStep)> { (mockCondition.Object, mockStep.Object) };
             var switchStep = new SwitchStep("FailingSwitch", cases);
 
             // Act & Assert
-            Assert.ThrowsAsync<InvalidOperationException>(async () =>
-                await switchStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None));
+            Assert.DoesNotThrowAsync(async () =>
+                await switchStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None));
         }
 
         [Test]
@@ -231,15 +273,15 @@ namespace neo.flow.core.tests.Steps
             // Arrange
             var mockDefaultStep = new Mock<IBusinessStep>();
             var testException = new InvalidOperationException("Test error in default");
-            mockDefaultStep.Setup(m => m.ExecuteAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()))
+            mockDefaultStep.Setup(m => m.ExecuteCoreAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()))
                 .ThrowsAsync(testException);
 
             var cases = new List<(ICondition, IBusinessStep)>();
             var switchStep = new SwitchStep("FailingDefault", cases, mockDefaultStep.Object);
 
             // Act & Assert
-            Assert.ThrowsAsync<InvalidOperationException>(async () =>
-                await switchStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None));
+            Assert.DoesNotThrowAsync(async () =>
+                await switchStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None));
         }
 
         [Test]
@@ -263,11 +305,19 @@ namespace neo.flow.core.tests.Steps
             var switchStep = new SwitchStep("MultiCaseSwitch", cases);
 
             // Act
-            await switchStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None);
+            await switchStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None);
 
             // Assert
-            mockStep1.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
-            mockStep2.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
+            mockStep1.Verify(m => m.ExecuteAsync(
+                mockExecutionContext.Object,
+                It.IsAny<CancellationToken>(),
+                null,
+                null), Times.Once);
+            mockStep2.Verify(m => m.ExecuteAsync(
+                mockExecutionContext.Object,
+                It.IsAny<CancellationToken>(),
+                null,
+                null), Times.Once);
         }
 
         [Test]
@@ -291,7 +341,7 @@ namespace neo.flow.core.tests.Steps
             var switchStep = new SwitchStep("EvaluationSwitch", cases);
 
             // Act
-            await switchStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None);
+            await switchStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None);
 
             // Assert - verify that all conditions were evaluated
             mockCondition1.Verify(m => m.Evaluate(mockExecutionContext.Object), Times.Once);

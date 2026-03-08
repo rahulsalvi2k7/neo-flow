@@ -48,7 +48,7 @@ namespace neo.flow.core.Builder
         public IWorkflow Build()
         {
             // Optionally pass contextBuilder to BuiltWorkflow if needed
-            return new BuiltWorkflow(_name, _steps.ToList());
+            return new Workflow(_name, _steps.ToList());
         }
     }
 }

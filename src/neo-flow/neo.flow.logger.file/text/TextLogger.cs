@@ -14,10 +14,12 @@ namespace neo.flow.logger.file.text
             _logFilePath = logFilePath;
         }
 
-        public async Task LogExecutionAsync(string stepName, IDateTimeProvider dateTimeProvider, IExecutionContext context)
+        public async Task LogExecutionAsync(string stepName, IExecutionContext context)
         {
-            var timestamp = dateTimeProvider.UtcNow();
+            var timestamp = context.DateTimeProvider.UtcNow();
+
             var logEntry = $"Step: {stepName}, Timestamp: {timestamp:O}, Context: {SerializeContext(context)}";
+
             await File.AppendAllTextAsync(_logFilePath, logEntry + Environment.NewLine);
         }
 

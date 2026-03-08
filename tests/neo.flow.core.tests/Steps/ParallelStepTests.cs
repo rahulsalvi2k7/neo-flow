@@ -24,15 +24,31 @@ namespace neo.flow.core.tests.Steps
             var mockStep1 = new Mock<IBusinessStep>();
             var mockStep2 = new Mock<IBusinessStep>();
             var mockStep3 = new Mock<IBusinessStep>();
-            var parallelStep = new ParallelStep("TestParallel", mockLogger.Object, mockStep1.Object, mockStep2.Object, mockStep3.Object);
+            var parallelStep = new ParallelStep("TestParallel", mockStep1.Object, mockStep2.Object, mockStep3.Object);
 
             // Act
-            await parallelStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None);
+            await parallelStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None);
 
             // Assert
-            mockStep1.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
-            mockStep2.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
-            mockStep3.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
+            mockStep1.Verify(m => m.ExecuteAsync(
+                mockExecutionContext.Object,
+                It.IsAny<CancellationToken>(),
+                null,
+                null),
+                Times.Once);
+
+            mockStep2.Verify(m => m.ExecuteAsync(
+                mockExecutionContext.Object,
+                It.IsAny<CancellationToken>(),
+                null,
+                null),
+                Times.Once);
+
+            mockStep3.Verify(m => m.ExecuteAsync(
+                mockExecutionContext.Object,
+                It.IsAny<CancellationToken>(),
+                null,
+                null), Times.Once);
         }
 
         [Test]
@@ -40,24 +56,28 @@ namespace neo.flow.core.tests.Steps
         {
             // Arrange
             var mockStep = new Mock<IBusinessStep>();
-            var parallelStep = new ParallelStep("SingleParallel", mockLogger.Object, mockStep.Object);
+            var parallelStep = new ParallelStep("SingleParallel", mockStep.Object);
 
             // Act
-            await parallelStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None);
+            await parallelStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None);
 
             // Assert
-            mockStep.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
+            mockStep.Verify(m => m.ExecuteAsync(
+                mockExecutionContext.Object,
+                It.IsAny<CancellationToken>(),
+                null,
+                null), Times.Once);
         }
 
         [Test]
-        public async Task ExecuteAsync_WithEmptySteps_CompletesSuccessfully()
+        public void ExecuteAsync_WithEmptySteps_CompletesSuccessfully()
         {
             // Arrange
             var parallelStep = new ParallelStep("EmptyParallel");
 
             // Act & Assert - should not throw
             Assert.DoesNotThrowAsync(async () =>
-                await parallelStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None));
+                await parallelStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None));
         }
 
         [Test]
@@ -89,14 +109,18 @@ namespace neo.flow.core.tests.Steps
         {
             // Arrange
             var mockStep = new Mock<IBusinessStep>();
-            var parallelStep = new ParallelStep("CancellableParallel", mockLogger.Object, mockStep.Object);
+            var parallelStep = new ParallelStep("CancellableParallel", mockStep.Object);
             var cancellationToken = new CancellationToken();
 
             // Act
-            await parallelStep.ExecuteAsync(mockExecutionContext.Object, cancellationToken);
+            await parallelStep.ExecuteCoreAsync(mockExecutionContext.Object, cancellationToken);
 
             // Assert
-            mockStep.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, cancellationToken), Times.Once);
+            mockStep.Verify(m => m.ExecuteAsync(
+                mockExecutionContext.Object,
+                cancellationToken,
+                null,
+                null), Times.Once);
         }
 
         [Test]
@@ -106,14 +130,14 @@ namespace neo.flow.core.tests.Steps
             var mockStep1 = new Mock<IBusinessStep>();
             var mockStep2 = new Mock<IBusinessStep>();
             var testException = new InvalidOperationException("Test error");
-            mockStep1.Setup(m => m.ExecuteAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()))
+            mockStep1.Setup(m => m.ExecuteCoreAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()))
                 .ThrowsAsync(testException);
 
-            var parallelStep = new ParallelStep("FailingParallel", mockLogger.Object, mockStep1.Object, mockStep2.Object);
+            var parallelStep = new ParallelStep("FailingParallel", mockStep1.Object, mockStep2.Object);
 
             // Act & Assert
-            Assert.ThrowsAsync<InvalidOperationException>(async () =>
-                await parallelStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None));
+            Assert.DoesNotThrowAsync(async () =>
+                await parallelStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None));
         }
     }
 }

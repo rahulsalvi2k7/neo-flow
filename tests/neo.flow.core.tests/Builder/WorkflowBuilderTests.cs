@@ -57,7 +57,7 @@ namespace neo.flow.core.tests.Builder
 
             // Assert
             Assert.That(workflow, Is.Not.Null);
-            Assert.That(workflow, Is.InstanceOf<BuiltWorkflow>());
+            Assert.That(workflow, Is.InstanceOf<Workflow>());
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace neo.flow.core.tests.Builder
 
             // Act
             builder.Step(step1).Step(step2).Step(step3);
-            var workflow = (BuiltWorkflow)builder.Build();
+            var workflow = (Workflow)builder.Build();
 
             // Assert
             Assert.That(workflow.Steps.Count, Is.EqualTo(3));
@@ -120,7 +120,7 @@ namespace neo.flow.core.tests.Builder
 
             // Act
             builder.Workflow(workflow1).Workflow(workflow2).Workflow(workflow3);
-            var builtWorkflow = (BuiltWorkflow)builder.Build();
+            var builtWorkflow = (Workflow)builder.Build();
 
             // Assert
             Assert.That(builtWorkflow.Steps.Count, Is.EqualTo(3));
@@ -141,7 +141,7 @@ namespace neo.flow.core.tests.Builder
 
             // Act
             builder.Step(step1).Workflow(workflow1).Step(step2).Workflow(workflow2);
-            var builtWorkflow = (BuiltWorkflow)builder.Build();
+            var builtWorkflow = (Workflow)builder.Build();
 
             // Assert
             Assert.That(builtWorkflow.Steps.Count, Is.EqualTo(4));
@@ -158,7 +158,7 @@ namespace neo.flow.core.tests.Builder
             var builder = new WorkflowBuilder("EmptyWorkflow");
 
             // Act
-            var workflow = (BuiltWorkflow)builder.Build();
+            var workflow = (Workflow)builder.Build();
 
             // Assert
             Assert.That(workflow.Steps.Count, Is.EqualTo(0));
@@ -249,7 +249,7 @@ namespace neo.flow.core.tests.Builder
 
             // Act
             builder.Step(step).Step(step).Step(step);
-            var workflow = (BuiltWorkflow)builder.Build();
+            var workflow = (Workflow)builder.Build();
 
             // Assert
             Assert.That(workflow.Steps.Count, Is.EqualTo(3));
@@ -272,7 +272,7 @@ namespace neo.flow.core.tests.Builder
             {
                 builder.Step(new Mock<IBusinessStep>().Object);
             }
-            var workflow = (BuiltWorkflow)builder.Build();
+            var workflow = (Workflow)builder.Build();
 
             // Assert
             Assert.That(workflow.Steps.Count, Is.EqualTo(stepCount));

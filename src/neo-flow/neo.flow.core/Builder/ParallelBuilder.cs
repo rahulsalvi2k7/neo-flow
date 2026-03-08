@@ -29,7 +29,7 @@ namespace neo.flow.core.Builder
 
         public IBusinessStep Build()
         {
-            return new ParallelStep(_name, _logger, _branches.ToArray());
+            return new ParallelStep(_name, _branches.ToArray());
         }
     }
 }

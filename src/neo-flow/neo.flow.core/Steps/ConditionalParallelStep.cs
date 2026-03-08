@@ -1,6 +1,4 @@
-﻿using neo.flow.core.Attributes;
-using neo.flow.core.Decorators;
-using neo.flow.core.Interfaces;
+﻿using neo.flow.core.Interfaces;
 
 namespace neo.flow.core.Steps
 {
@@ -9,28 +7,21 @@ namespace neo.flow.core.Steps
         private readonly IReadOnlyList<(ICondition Condition, IBusinessStep Step)> _branches;
         private readonly string _name;
         private readonly IBusinessStep? _defaultStep;
-        private readonly ILogger<ConditionalParallelStep>? _logger;
 
 
         public ConditionalParallelStep(
             string name,
             IEnumerable<(ICondition condition, IBusinessStep step)> branches,
-            IBusinessStep? defaultStep = null,
-            ILogger<ConditionalParallelStep>? logger = null)
+            IBusinessStep? defaultStep = null)
         {
             _branches = branches.ToList();
             _name = name;
             _defaultStep = defaultStep;
-            _logger = logger;
         }
 
         public string Name => _name;
 
-        [LogExecution]
-        public Task ExecuteAsync(IExecutionContext context, CancellationToken ct)
-            => LoggingDecorator.InvokeWithLoggingAsync(ExecuteCoreAsync, context, ct, this, _logger);
-
-        private async Task ExecuteCoreAsync(IExecutionContext context, CancellationToken ct)
+        public async Task ExecuteCoreAsync(IExecutionContext context, CancellationToken ct)
         {
             var tasks = new List<Task>();
 

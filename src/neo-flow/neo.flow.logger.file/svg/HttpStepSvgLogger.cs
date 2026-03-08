@@ -6,12 +6,12 @@ namespace neo.flow.logger.file.svg
     {
         public HttpStepSvgLogger(string svgPath) : base(svgPath) { }
 
-        public override async Task LogExecutionAsync(string stepName, IDateTimeProvider dateTimeProvider, IExecutionContext context)
+        public override async Task LogExecutionAsync(string stepName, IExecutionContext context)
         {
             var x = context.Get<int>("x");
             var y = context.Get<int>("y");
 
-            var ts = dateTimeProvider.UtcNow();
+            var ts = context.DateTimeProvider.UtcNow();
 
             // Rectangle for HTTP step
             var rect = $"<rect x='{x}' y='{y}' width='120' height='60' fill='white' stroke='black' stroke-width='2' />";

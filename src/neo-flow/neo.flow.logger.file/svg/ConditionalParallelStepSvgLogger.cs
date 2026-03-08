@@ -6,7 +6,7 @@ namespace neo.flow.logger.file.svg
     {
         public ConditionalParallelStepSvgLogger(string svgPath) : base(svgPath) { }
 
-        public override async Task LogExecutionAsync(string stepName, IDateTimeProvider dateTimeProvider, IExecutionContext context)
+        public override async Task LogExecutionAsync(string stepName, IExecutionContext context)
         {
             // Diamond with O
             var diamond = "<polygon points='50,10 90,50 50,90 10,50' style='fill:white;stroke:black;stroke-width:2' />";

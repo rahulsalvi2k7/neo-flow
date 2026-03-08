@@ -3,11 +3,11 @@ using neo.flow.core.Interfaces;
 
 namespace neo.flow.core.Builder
 {
-    public sealed class BuiltWorkflow : WorkflowBase
+    public sealed class Workflow : WorkflowBase
     {
         public readonly IReadOnlyList<IBusinessStep> _steps;
 
-        public BuiltWorkflow(string name, IReadOnlyList<IBusinessStep> steps)
+        public Workflow(string name, IReadOnlyList<IBusinessStep> steps)
         {
             Name = name;
             _steps = steps;

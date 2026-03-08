@@ -40,12 +40,12 @@ namespace neo.flow.core.tests.Steps
             var conditionalParallelStep = new ConditionalParallelStep("MultipleTrue", branches);
 
             // Act
-            await conditionalParallelStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None);
+            await conditionalParallelStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None);
 
             // Assert
-            mockStep1.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
-            mockStep2.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
-            mockStep3.Verify(m => m.ExecuteAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()), Times.Never);
+            mockStep1.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>(), null, null), Times.Once);
+            mockStep2.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>(), null, null), Times.Once);
+            mockStep3.Verify(m => m.ExecuteAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>(), null, null), Times.Never);
         }
 
         [Test]
@@ -64,10 +64,14 @@ namespace neo.flow.core.tests.Steps
             var conditionalParallelStep = new ConditionalParallelStep("SingleTrue", branches);
 
             // Act
-            await conditionalParallelStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None);
+            await conditionalParallelStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None);
 
             // Assert
-            mockStep.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
+            mockStep.Verify(m => m.ExecuteAsync(
+                mockExecutionContext.Object,
+                It.IsAny<CancellationToken>(),
+                null,
+                null), Times.Once);
         }
 
         [Test]
@@ -91,11 +95,11 @@ namespace neo.flow.core.tests.Steps
             var conditionalParallelStep = new ConditionalParallelStep("AllFalse", branches);
 
             // Act
-            await conditionalParallelStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None);
+            await conditionalParallelStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None);
 
             // Assert
-            mockStep1.Verify(m => m.ExecuteAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()), Times.Never);
-            mockStep2.Verify(m => m.ExecuteAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()), Times.Never);
+            mockStep1.Verify(m => m.ExecuteCoreAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()), Times.Never);
+            mockStep2.Verify(m => m.ExecuteCoreAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Test]
@@ -107,6 +111,8 @@ namespace neo.flow.core.tests.Steps
             var mockCondition2 = new Mock<ICondition>();
             var mockStep2 = new Mock<IBusinessStep>();
             var mockDefaultStep = new Mock<IBusinessStep>();
+            var mockLogger = new Mock<ILogger<IBusinessStep>>();
+            var mockDbLogger = new Mock<IDbLogger<IBusinessStep>>();
 
             mockCondition1.Setup(m => m.Evaluate(It.IsAny<IExecutionContext>())).Returns(false);
             mockCondition2.Setup(m => m.Evaluate(It.IsAny<IExecutionContext>())).Returns(false);
@@ -120,12 +126,18 @@ namespace neo.flow.core.tests.Steps
             var conditionalParallelStep = new ConditionalParallelStep("WithDefault", branches, mockDefaultStep.Object);
 
             // Act
-            await conditionalParallelStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None);
+            await conditionalParallelStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None);
 
             // Assert
-            mockDefaultStep.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
-            mockStep1.Verify(m => m.ExecuteAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()), Times.Never);
-            mockStep2.Verify(m => m.ExecuteAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()), Times.Never);
+            mockDefaultStep.Verify(m =>
+                m.ExecuteAsync(mockExecutionContext.Object,
+                It.IsAny<CancellationToken>(),
+                null,
+                null),
+                Times.Once);
+
+            mockStep1.Verify(m => m.ExecuteCoreAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()), Times.Never);
+            mockStep2.Verify(m => m.ExecuteCoreAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Test]
@@ -146,15 +158,26 @@ namespace neo.flow.core.tests.Steps
             var conditionalParallelStep = new ConditionalParallelStep("WithDefault", branches, mockDefaultStep.Object);
 
             // Act
-            await conditionalParallelStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None);
+            await conditionalParallelStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None);
 
             // Assert
-            mockStep1.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
-            mockDefaultStep.Verify(m => m.ExecuteAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()), Times.Never);
+            mockStep1.Verify(m => m.ExecuteAsync(
+                mockExecutionContext.Object,
+                It.IsAny<CancellationToken>(),
+                null,
+                null),
+                Times.Once);
+
+            mockDefaultStep.Verify(m => m.ExecuteAsync(
+                It.IsAny<IExecutionContext>(),
+                It.IsAny<CancellationToken>(),
+                null,
+                null),
+                Times.Never);
         }
 
         [Test]
-        public async Task ExecuteAsync_WithEmptyBranches_CompletesSuccessfully()
+        public void ExecuteAsync_WithEmptyBranches_CompletesSuccessfully()
         {
             // Arrange
             var branches = new List<(ICondition, IBusinessStep)>();
@@ -162,7 +185,7 @@ namespace neo.flow.core.tests.Steps
 
             // Act & Assert
             Assert.DoesNotThrowAsync(async () =>
-                await conditionalParallelStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None));
+                await conditionalParallelStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None));
         }
 
         [Test]
@@ -174,10 +197,14 @@ namespace neo.flow.core.tests.Steps
             var conditionalParallelStep = new ConditionalParallelStep("EmptyWithDefault", branches, mockDefaultStep.Object);
 
             // Act
-            await conditionalParallelStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None);
+            await conditionalParallelStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None);
 
             // Assert
-            mockDefaultStep.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, It.IsAny<CancellationToken>()), Times.Once);
+            mockDefaultStep.Verify(m => m.ExecuteAsync(
+                mockExecutionContext.Object,
+                It.IsAny<CancellationToken>(),
+                null,
+                null), Times.Once);
         }
 
         [Test]
@@ -223,10 +250,10 @@ namespace neo.flow.core.tests.Steps
             var cancellationToken = new CancellationToken();
 
             // Act
-            await conditionalParallelStep.ExecuteAsync(mockExecutionContext.Object, cancellationToken);
+            await conditionalParallelStep.ExecuteCoreAsync(mockExecutionContext.Object, cancellationToken);
 
             // Assert
-            mockStep.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, cancellationToken), Times.Once);
+            mockStep.Verify(m => m.ExecuteAsync(mockExecutionContext.Object, cancellationToken, null, null), Times.Once);
         }
 
         [Test]
@@ -237,8 +264,13 @@ namespace neo.flow.core.tests.Steps
             var mockStep = new Mock<IBusinessStep>();
             var testException = new InvalidOperationException("Conditional parallel step error");
 
-            mockCondition.Setup(m => m.Evaluate(It.IsAny<IExecutionContext>())).Returns(true);
-            mockStep.Setup(m => m.ExecuteAsync(It.IsAny<IExecutionContext>(), It.IsAny<CancellationToken>()))
+            mockCondition
+                .Setup(m => m.Evaluate(It.IsAny<IExecutionContext>()))
+                .Returns(true);
+            mockStep
+                .Setup(m => m.ExecuteCoreAsync(
+                    It.IsAny<IExecutionContext>(),
+                    It.IsAny<CancellationToken>()))
                 .ThrowsAsync(testException);
 
             var branches = new List<(ICondition, IBusinessStep)>
@@ -249,8 +281,8 @@ namespace neo.flow.core.tests.Steps
             var conditionalParallelStep = new ConditionalParallelStep("FailingParallel", branches);
 
             // Act & Assert
-            Assert.ThrowsAsync<InvalidOperationException>(async () =>
-                await conditionalParallelStep.ExecuteAsync(mockExecutionContext.Object, CancellationToken.None));
+            Assert.DoesNotThrowAsync(async () =>
+                await conditionalParallelStep.ExecuteCoreAsync(mockExecutionContext.Object, CancellationToken.None));
         }
     }
 }

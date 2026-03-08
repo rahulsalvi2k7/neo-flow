@@ -8,7 +8,7 @@ namespace neo.flow.app
         {
             var name = context.Get<string>("name");
 
-            if (name is null) 
+            if (name is null)
             {
                 return false;
             }

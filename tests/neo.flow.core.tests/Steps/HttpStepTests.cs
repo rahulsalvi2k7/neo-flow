@@ -7,6 +7,7 @@ namespace neo.flow.core.Tests.Steps
     public class HttpStepTests
     {
         private Mock<IDateTimeProvider> mockDateTimeProvider = null!;
+        private Mock<ILogger<HttpStep>> mockLogger = new Mock<ILogger<HttpStep>>();
 
         [SetUp]
         public void Setup()
@@ -35,9 +36,9 @@ namespace neo.flow.core.Tests.Steps
 
             var client = new HttpClient(new FakeHandler(response));
 
-            var step = new HttpStep("MyHttp", new System.Uri("http://example.invalid/"), HttpMethod.Get, null, client);
+            var step = new HttpStep("MyHttp", new System.Uri("http://example.invalid/"), HttpMethod.Get, null, client, mockLogger.Object);
 
-            await step.ExecuteAsync(ctx, CancellationToken.None);
+            await step.ExecuteCoreAsync(ctx, CancellationToken.None);
 
             var resp = ctx.Get<string>("lastHttpResponse");
             var status = ctx.Get<int>("lastHttpStatusCode");
