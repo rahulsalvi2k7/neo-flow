@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using neo.flow.data.Models;
 
-namespace neo.flow.logger.db.sql;
+namespace neo.flow.data.DataContext;
 
 public class AppDbContext : DbContext
 {
-    private string _connectionString;
+    private readonly string _connectionString;
 
     public DbSet<BusinessStepExecutionInstance> BusinessStepExecutionInstances { get; set; }
 
